@@ -1,0 +1,2 @@
+# Tedix
+A text editor.
