@@ -1,8 +1,20 @@
 import tkinter as tk
-import _thread
+import tkinter.filedialog
+import tkinter.messagebox
+import os
 import sys
 import webbrowser
-import random
+
+def my_message_box(title1, message1):
+    win001 = tk.Toplevel()
+    win001.title(title1)
+    win001.geometry("300x225")
+    message1 = "123"*1000
+    if len(message1) > 255:
+        message1 = message1[0:256]
+    tk.Message(win001, text=message1).pack()
+    tk.Button(win001, text="确定", command=win001.destroy).place(relx=0.0, rely=0.8, relheight=0.2, relwidth=1.0)
+    win001.resizable(False, False)
 
 def open_buy_web(event):
     webbrowser.open("https://tedix.rth1.one/buy", new=0)
@@ -11,7 +23,7 @@ def win2_help():
     win2 = tk.Toplevel()
     win2.geometry("400x300")
     win2.resizable(False, False)
-    # tk.Label(win2, image=tk.PhotoImage(file="tedix.gif")).pack()
+    # tk.Label(win2, image=tk.PhotoImage(file="tedix.gif")).pack() 不知道为什么不能显示图片
     tk.Label(win2, text="Tedix").pack()
     tk.Label(win2, text="一个简单的文本编辑器").pack()
     tk.Label(win2, text="作者: Joulier429").pack()
@@ -20,7 +32,7 @@ def win2_help():
 def sign_up_tedix():
     def nothing_like_that():
         win4 = tk.Toplevel()
-        a = license_text_area.get("1.1", "end")
+        a = license_text_area.get("1.0", "end")
         a = a[0:-1]
         if a != "":
             b = "没有像那样东西😡"
@@ -42,14 +54,24 @@ def sign_up_tedix():
     license_text_area = tk.Text(win3)
     license_text_area.place(relx=0.1, rely=0.15, relwidth=0.8, relheight=0.7)
     tk.Button(win3, text="确定", command=nothing_like_that).place(relx=0.3, rely=0.87, relheight=0.1, relwidth=0.4)
-    # while True:
-    #     a
-
-        
-
 
 def open_a_file(): # 打开文件
-    pass
+    file_path = tkinter.filedialog.askopenfilename(title="開くファイルは。。。？")
+    if file_path == "":
+        tkinter.messagebox.showinfo("害tm带着那眼镜呢？文件那？", "我问你文件内，我文件呐？我文件啊啊啊啊啊！！！！！")
+    else:
+        filesize = os.path.getsize(file_path)
+        if filesize < 1024*1024*4:
+            if textarea.get("1.0", "end") != "":
+                a_important_decide = tkinter.messagebox.askquestion("文件未保存", "文件发生改变并且未保存，要保存吗？")
+                if a_important_decide:
+                    saveaspath = tkinter.filedialog.askdirectory(title="选择")
+        else:
+            a_important_decide = tkinter.messagebox.askquestion("文件大于4MB", "文件大于4MB，可能会导致软件崩溃，要继续吗？")
+            if a_important_decide:
+                pass
+            else:
+                pass
 
 rtwin = tk.Tk()
 
@@ -60,6 +82,7 @@ mainmenu = tk.Menu(rtwin)
 
 filemenu = tk.Menu(mainmenu, tearoff=False)
 filemenu.add_command(label="新建")
+filemenu.add_command(label="打开", command=open_a_file)
 filemenu.add_command(label="保存")
 filemenu.add_command(label="另存为")
 filemenu.add_separator()
