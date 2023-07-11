@@ -1,9 +1,13 @@
 import tkinter as tk
+from tkinter import ttk
 import tkinter.filedialog
 import tkinter.messagebox
 import os
 import sys
 import webbrowser
+
+
+open_file_path = "cache_\\000.txt"
 
 def my_message_box(title1, message1):
     win001 = tk.Toplevel()
@@ -56,22 +60,26 @@ def sign_up_tedix():
     tk.Button(win3, text="确定", command=nothing_like_that).place(relx=0.3, rely=0.87, relheight=0.1, relwidth=0.4)
 
 def open_a_file(): # 打开文件
+    def if_didn_save_the_file():
+        0
+    def cover_the_textarea():
+        0
     file_path = tkinter.filedialog.askopenfilename(title="開くファイルは。。。？")
     if file_path == "":
         tkinter.messagebox.showinfo("害tm带着那眼镜呢？文件那？", "我问你文件内，我文件呐？我文件啊啊啊啊啊！！！！！")
     else:
         filesize = os.path.getsize(file_path)
-        if filesize < 1024*1024*4:
-            if textarea.get("1.0", "end") != "":
-                a_important_decide = tkinter.messagebox.askquestion("文件未保存", "文件发生改变并且未保存，要保存吗？")
-                if a_important_decide:
-                    saveaspath = tkinter.filedialog.askdirectory(title="选择")
+        if filesize > 1024*1024*4:
+            pass
         else:
             a_important_decide = tkinter.messagebox.askquestion("文件大于4MB", "文件大于4MB，可能会导致软件崩溃，要继续吗？")
-            if a_important_decide:
-                pass
-            else:
-                pass
+            if not a_important_decide:
+                return 0
+    pass
+
+def save_the_file():
+    with open(open_file_path, mode="w") as file1:
+       file1.write(textarea.get("1.0", "end"))
 
 rtwin = tk.Tk()
 
@@ -83,7 +91,7 @@ mainmenu = tk.Menu(rtwin)
 filemenu = tk.Menu(mainmenu, tearoff=False)
 filemenu.add_command(label="新建")
 filemenu.add_command(label="打开", command=open_a_file)
-filemenu.add_command(label="保存")
+filemenu.add_command(label="保存", command=save_the_file)
 filemenu.add_command(label="另存为")
 filemenu.add_separator()
 filemenu.add_command(label="退出", command=sys.exit)
@@ -95,6 +103,8 @@ mainmenu.add_cascade(label="帮助", menu=helpmenu)
 
 textarea = tk.Text(rtwin)
 textarea.place(relx=0, rely=0, relheight=1.0, relwidth=0.618)
+
+
 subtextarea = tk.Text(rtwin)
 subtextarea.place(relx=0.618, rely=0, relwidth=0.382, relheight=0.618)
 infotextarea = tk.Text(rtwin)
