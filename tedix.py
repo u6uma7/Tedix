@@ -42,7 +42,7 @@ def sign_up_tedix():
             b = "没有像那样东西😡"
         else:
             b = "这是我们信任的问题😡"
-        win4.title("没有像那样东西😡")
+        win4.title(b)
         win4.geometry("300x100")
         tk.Label(win4, text=b).pack()
         tk.Button(win4, text="确定", command=win4.destroy).pack()
@@ -59,6 +59,14 @@ def sign_up_tedix():
     license_text_area.place(relx=0.1, rely=0.15, relwidth=0.8, relheight=0.7)
     tk.Button(win3, text="确定", command=nothing_like_that).place(relx=0.3, rely=0.87, relheight=0.1, relwidth=0.4)
 
+def saveas_file():
+    saveas_path = tkinter.filedialog.asksaveasfilename(title="[ファイルとして保存]を選択してください")
+    if saveas_path == "":
+        tkinter.messagebox.showinfo("害tm带着那眼镜呢？文件那？", "我问你文件内，我文件呐？我文件啊啊啊啊啊！！！！！")
+    else:
+        with open(saveas_path, mode="w", encoding="utf-8") as file1:
+            file1.write(textarea.get("1.0", "end"))
+
 def open_a_file(): # 打开文件
     def if_didn_save_the_file():
         0
@@ -69,7 +77,7 @@ def open_a_file(): # 打开文件
         tkinter.messagebox.showinfo("害tm带着那眼镜呢？文件那？", "我问你文件内，我文件呐？我文件啊啊啊啊啊！！！！！")
     else:
         filesize = os.path.getsize(file_path)
-        if filesize > 1024*1024*4:
+        if filesize <= 1024*1024*4:
             pass
         else:
             a_important_decide = tkinter.messagebox.askquestion("文件大于4MB", "文件大于4MB，可能会导致软件崩溃，要继续吗？")
@@ -78,8 +86,9 @@ def open_a_file(): # 打开文件
     pass
 
 def save_the_file():
-    with open(open_file_path, mode="w") as file1:
+    with open(open_file_path, mode="w", encoding="utf-8") as file1:
        file1.write(textarea.get("1.0", "end"))
+
 
 rtwin = tk.Tk()
 
@@ -92,7 +101,7 @@ filemenu = tk.Menu(mainmenu, tearoff=False)
 filemenu.add_command(label="新建")
 filemenu.add_command(label="打开", command=open_a_file)
 filemenu.add_command(label="保存", command=save_the_file)
-filemenu.add_command(label="另存为")
+filemenu.add_command(label="另存为", command=saveas_file)
 filemenu.add_separator()
 filemenu.add_command(label="退出", command=sys.exit)
 helpmenu = tk.Menu(mainmenu, tearoff=False)
