@@ -60,18 +60,26 @@ def sign_up_tedix():
     tk.Button(win3, text="确定", command=nothing_like_that).place(relx=0.3, rely=0.87, relheight=0.1, relwidth=0.4)
 
 def saveas_file():
+    global open_file_path
     saveas_path = tkinter.filedialog.asksaveasfilename(title="[ファイルとして保存]を選択してください")
     if saveas_path == "":
         tkinter.messagebox.showinfo("害tm带着那眼镜呢？文件那？", "我问你文件内，我文件呐？我文件啊啊啊啊啊！！！！！")
     else:
         with open(saveas_path, mode="w", encoding="utf-8") as file1:
             file1.write(textarea.get("1.0", "end"))
+            open_file_path = saveas_path
 
-def open_a_file(): # 打开文件
-    def if_didn_save_the_file():
-        0
+def open_file(): # 打开文件
+    file1 = open(open_file_path)
+    def did_you_save_the_file():
+        if file1 != textarea.get("1.0", "end"):
+            a_very_important_choice = tkinter.messagebox.askquestion("文件未保存", "要在保存文件之后打开文件吗")
+            if a_very_important_choice:
+                file1.write(textarea.get("1.0", "end"))
     def cover_the_textarea():
-        0
+        with open(open_file_path, mode="r", encoding="utf-8") as file2:
+            textarea.delete("1.0", "end")
+            textarea.insert("1.0", file2.read())
     file_path = tkinter.filedialog.askopenfilename(title="開くファイルは。。。？")
     if file_path == "":
         tkinter.messagebox.showinfo("害tm带着那眼镜呢？文件那？", "我问你文件内，我文件呐？我文件啊啊啊啊啊！！！！！")
@@ -80,10 +88,12 @@ def open_a_file(): # 打开文件
         if filesize <= 1024*1024*4:
             pass
         else:
-            a_important_decide = tkinter.messagebox.askquestion("文件大于4MB", "文件大于4MB，可能会导致软件崩溃，要继续吗？")
-            if not a_important_decide:
+            a_important_choose = tkinter.messagebox.askquestion("文件大于4MB", "文件大于4MB，可能会导致软件崩溃，要继续吗？")
+            if not a_important_choose:
                 return 0
-    pass
+    did_you_save_the_file()
+    cover_the_textarea()
+    file1.close()
 
 def save_the_file():
     with open(open_file_path, mode="w", encoding="utf-8") as file1:
@@ -99,7 +109,7 @@ mainmenu = tk.Menu(rtwin)
 
 filemenu = tk.Menu(mainmenu, tearoff=False)
 filemenu.add_command(label="新建")
-filemenu.add_command(label="打开", command=open_a_file)
+filemenu.add_command(label="打开", command=open_file)
 filemenu.add_command(label="保存", command=save_the_file)
 filemenu.add_command(label="另存为", command=saveas_file)
 filemenu.add_separator()
