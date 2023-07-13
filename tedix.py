@@ -1,10 +1,9 @@
 import tkinter as tk
-from tkinter import ttk
 import tkinter.filedialog
 import tkinter.messagebox
-import os
 import sys
 import webbrowser
+import _thread
 
 
 open_file_path = "cache_\\000.txt"
@@ -28,7 +27,7 @@ def win2_help():
     win2.geometry("400x300")
     win2.resizable(False, False)
     # tk.Label(win2, image=tk.PhotoImage(file="tedix.gif")).pack() 不知道为什么不能显示图片
-    tk.Label(win2, text="Tedix").pack()
+    tk.Label(win2, text="Tedix v0.1.0").pack()
     tk.Label(win2, text="一个简单的文本编辑器").pack()
     tk.Label(win2, text="作者: Joulier429").pack()
     tk.Button(win2, text="确定", command=win2.destroy).place(relx=0.8, rely=0.9, relwidth=0.2, relheight=0.1)
@@ -103,10 +102,9 @@ def save_the_file():
     with open(open_file_path, mode="w", encoding="utf-8") as file1:
        file1.write(textarea.get("1.0", "end"))
 
-
 rtwin = tk.Tk()
 
-rtwin.title("Tedix")
+rtwin.title("Tedix v0.1.0")
 rtwin.geometry("800x600")
 
 mainmenu = tk.Menu(rtwin)
@@ -133,7 +131,7 @@ subtextarea.place(relx=0.618, rely=0, relwidth=0.382, relheight=0.618)
 infotextarea = tk.Text(rtwin)
 infotextarea.place(relx=0.618, rely=0.618, relwidth=0.382, relheight=0.382)
 
-
+rtwin.bind("<Control-S>", save_the_file)
 
 rtwin.config(menu=mainmenu)
 rtwin.mainloop()
